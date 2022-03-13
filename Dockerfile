@@ -1,5 +1,8 @@
 FROM openjdk:8-jdk-alpine
-RUN addgroup -S spring && adduser -S spring -G spring
-USER spring:spring
-COPY --from=build /home/app/target/war_name.war app.war
-ENTRYPOINT ["java","-jar","/app.war"]
+ARG JAR_FILE=build//home/ubuntu/*.jar
+COPY ${JAR_FILE} app.jar
+
+RUN mkdir destination-dir-for-add
+ADD sample.tar.gz /destination-dir-for-add
+
+ENTRYPOINT ["java","-jar","/app.jar"]
